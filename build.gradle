@@ -95,9 +95,6 @@ repositories {
         url = "https://maven.theillusivec4.top/"
     }
     maven {
-        url 'https://maven.mcmoddev.com'
-    }
-    maven {
         name = "CurseMaven"
         url = "https://www.cursemaven.com"
     }
@@ -114,7 +111,7 @@ dependencies {
     compileOnly fg.deobf("curse.maven:cosmeticarmorreworked-237307:4439659")
     compileOnly fg.deobf("curse.maven:tool-belt-260262:4441247")
 
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.4-5.1.5.4")
+    // runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.4-5.1.5.4")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

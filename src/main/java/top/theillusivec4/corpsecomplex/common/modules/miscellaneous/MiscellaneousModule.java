@@ -75,7 +75,7 @@ public class MiscellaneousModule {
       return;
     }
     Player playerEntity = (Player) evt.getEntity();
-    Level world = playerEntity.level();
+    Level world = playerEntity.level;
 
     if (!world.isClientSide) {
       DeathStorageCapability.getCapability(playerEntity).ifPresent(

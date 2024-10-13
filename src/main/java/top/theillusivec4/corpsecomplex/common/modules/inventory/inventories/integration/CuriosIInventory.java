@@ -40,9 +40,9 @@ public class CuriosIInventory implements IInventory {
 
   @Override
   public void storeInventory(IDeathStorage deathStorage) {
-    Player Player = deathStorage.getPlayer();
+    Player player = deathStorage.getPlayer();
     ListTag list = new ListTag();
-    CuriosApi.getCuriosInventory(Player)
+    CuriosApi.getCuriosHelper().getCuriosHandler(player)
         .ifPresent(curioHandler -> curioHandler.getCurios().forEach((id, stackHandler) -> {
           ListTag list1 = new ListTag();
           ListTag list2 = new ListTag();
@@ -81,7 +81,7 @@ public class CuriosIInventory implements IInventory {
       ListTag list = (ListTag) oldStorage.getInventory("curios");
 
       if (list != null) {
-        CuriosApi.getCuriosInventory(player).ifPresent(newHandler -> {
+        CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(newHandler -> {
 
           for (int i = 0; i < list.size(); i++) {
             CompoundTag tag = list.getCompound(i);
@@ -110,7 +110,7 @@ public class CuriosIInventory implements IInventory {
                   if (stackHandler.getSlots() > slot &&
                       stackHandler.getStackInSlot(slot).isEmpty()) {
                     stacksHandler.getStacks().setStackInSlot(slot, itemstack);
-                    CuriosApi.getCurio(itemstack).ifPresent((curio) -> {
+                    CuriosApi.getCuriosHelper().getCurio(itemstack).ifPresent((curio) -> {
                       SlotContext slotContext = new SlotContext(id, player, slot, false, true);
                       player.getAttributes()
                           .addTransientAttributeModifiers(curio.getAttributeModifiers(slotContext, player.getUUID()));

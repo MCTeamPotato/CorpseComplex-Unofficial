@@ -50,23 +50,9 @@ public class CorpseComplexRegistry {
 
   public static final RegistryObject<Item> SCROLL = ITEMS.register("scroll", ScrollItem::new);
 
-  public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CorpseComplex.MODID);
-
-  public static final RegistryObject<CreativeModeTab> VENDING_MACHINE = TABS.register("corpsecomplex",
-          () -> CreativeModeTab
-                  .builder()
-                  .title(Component.translatable("creativetab.corpsecomplex.corpsecomplex"))
-                  .icon(() -> new ItemStack(SCROLL.get()))
-                  .displayItems((parameters, output)->{
-                    output.accept(SCROLL.get());
-                  })
-                  .build()
-  );
-
   public static void register(IEventBus eventBus){
     ITEMS.register(eventBus);
     ENCHANTMENTS.register(eventBus);
     MOB_EFFECTS.register(eventBus);
-    TABS.register(eventBus);
   }
 }

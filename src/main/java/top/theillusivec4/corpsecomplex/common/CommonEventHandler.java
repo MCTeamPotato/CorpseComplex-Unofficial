@@ -26,7 +26,6 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -54,7 +53,7 @@ public class CommonEventHandler {
       return;
     }
     Player playerEntity = (Player) evt.getEntity();
-    Level world = playerEntity.level();
+    Level world = playerEntity.level;
 
     if (!world.isClientSide()) {
       DeathStorageCapability.getCapability(playerEntity).ifPresent(deathStorage -> {
