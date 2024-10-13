@@ -3,6 +3,8 @@ package top.theillusivec4.corpsecomplex.common.modules.item;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -28,7 +30,7 @@ public class ScrollItem extends Item {
         if (!level.isClientSide) {
             Optional<GlobalPos> globalPos = player.getLastDeathLocation();
             if (globalPos.isEmpty()) {
-                player.sendSystemMessage(Component.translatable("message.corpsecomplex.death_loc_null"));
+                player.sendMessage(new TranslatableComponent("message.corpsecomplex.death_loc_null"), player.getUUID());
                 return InteractionResultHolder.fail(itemstack);
             }
             player.startUsingItem(hand);
@@ -62,7 +64,7 @@ public class ScrollItem extends Item {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag tooltipFlag) {
-        tooltip.add(Component.translatable("tooltip.corpsecomplex.scroll"));
+        tooltip.add(new TranslatableComponent("tooltip.corpsecomplex.scroll"));
     }
 
     @Override

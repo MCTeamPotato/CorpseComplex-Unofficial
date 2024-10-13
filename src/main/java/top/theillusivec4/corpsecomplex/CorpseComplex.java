@@ -25,6 +25,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -37,6 +38,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import top.theillusivec4.corpsecomplex.common.capability.DeathStorageCapability;
 import top.theillusivec4.corpsecomplex.common.config.CorpseComplexConfig;
 import top.theillusivec4.corpsecomplex.common.registry.CorpseComplexRegistry;
 import top.theillusivec4.corpsecomplex.common.util.integration.IntegrationManager;
@@ -62,6 +64,8 @@ public class CorpseComplex {
 
     eventBus.addListener(this::setup);
     eventBus.addListener(this::config);
+    eventBus.addListener(this::registerCapability);
+
     CorpseComplexRegistry.register(eventBus);
   }
 
@@ -76,6 +80,10 @@ public class CorpseComplex {
       pItems.add(new ItemStack(CorpseComplexRegistry.SCROLL.get()));
     }
   };
+
+  public void registerCapability(RegisterCapabilitiesEvent event) {
+    event.register(DeathStorageCapability.class);
+  }
 
   private void setup(final FMLCommonSetupEvent evt) {
     IntegrationManager.init();

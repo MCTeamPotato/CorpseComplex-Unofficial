@@ -27,7 +27,7 @@ java {
 }
 
 minecraft {
-    mappings channel: "parchment", version: "2022.11.27-1.19.2"
+    mappings channel: "parchment", version: "2022.11.06-1.18.2"
 
     copyIdeResources = true
     runs {
@@ -108,8 +108,8 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.6.3")
-    compileOnly fg.deobf("curse.maven:cosmeticarmorreworked-237307:4016732")
-    compileOnly fg.deobf("curse.maven:tool-belt-260262:4124032")
+    compileOnly fg.deobf("curse.maven:cosmeticarmorreworked-237307:4016730")
+    compileOnly fg.deobf("curse.maven:tool-belt-260262:4124030")
 
     // runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.4-5.1.5.4")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'

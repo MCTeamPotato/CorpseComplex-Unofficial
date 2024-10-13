@@ -131,11 +131,11 @@ public class DeathInfo {
     this.isExplosion = tag.getBoolean("Explosion");
     this.isProjectile = tag.getBoolean("Projectile");
     if (tag.contains("ImmediateSource")) {
-      this.immediateSource = ForgeRegistries.ENTITY_TYPES
+      this.immediateSource = ForgeRegistries.ENTITIES
           .getValue(new ResourceLocation(tag.getString("ImmediateSource")));
     }
     if (tag.contains("TrueSource")) {
-      this.trueSource = ForgeRegistries.ENTITY_TYPES
+      this.trueSource = ForgeRegistries.ENTITIES
           .getValue(new ResourceLocation(tag.getString("TrueSource")));
     }
     this.dimension = new ResourceLocation(tag.getString("Dimension"));

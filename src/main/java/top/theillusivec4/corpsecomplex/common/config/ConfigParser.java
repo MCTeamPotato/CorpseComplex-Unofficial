@@ -39,7 +39,7 @@ public class ConfigParser {
   public static List<EntityType<?>> parseMobs(@Nonnull List<? extends String> configList) {
     List<EntityType<?>> list = new ArrayList<>();
     configList.forEach(mob -> {
-      EntityType<?> entity = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(mob));
+      EntityType<?> entity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(mob));
 
       if (entity != null) {
         list.add(entity);

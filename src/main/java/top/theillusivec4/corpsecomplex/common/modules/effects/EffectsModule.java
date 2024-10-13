@@ -21,6 +21,7 @@ package top.theillusivec4.corpsecomplex.common.modules.effects;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -42,14 +43,14 @@ public class EffectsModule {
 
   @SubscribeEvent
   public static void finishItemUse(LivingEntityUseItemEvent.Finish evt) {
-    LivingEntity entity = evt.getEntity();
+    Entity entity = evt.getEntity();
 
-    if (!entity.getCommandSenderWorld().isClientSide && entity instanceof Player) {
-      DeathStorageCapability.getCapability((Player) entity).ifPresent(
+    if (!entity.getCommandSenderWorld().isClientSide && entity instanceof Player player) {
+      DeathStorageCapability.getCapability(player).ifPresent(
           deathStorage -> deathStorage.getSettings().getEffectsSettings().getCures()
               .forEach(itemStack -> {
                 if (ItemStack.isSameItemSameTags(evt.getItem(), itemStack)) {
-                  entity.curePotionEffects(evt.getItem());
+                    player.curePotionEffects(evt.getItem());
                 }
               }));
     }
@@ -99,7 +100,7 @@ public class EffectsModule {
   public static void playerRespawn(final PlayerRespawnEvent evt) {
 
     if (!evt.isEndConquered()) {
-      Player player = evt.getEntity();
+      Player player = (Player) evt.getEntity();
       DeathStorageCapability.getCapability(player).ifPresent(deathStorage -> {
         deathStorage.getEffects().forEach(player::addEffect);
         deathStorage.clearEffects();

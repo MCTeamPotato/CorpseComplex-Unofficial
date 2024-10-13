@@ -47,7 +47,7 @@ public class MiscellaneousModule {
   public static void setSpawn(final PlayerSetSpawnEvent evt) {
 
     if (!evt.getEntity().getCommandSenderWorld().isClientSide) {
-      DeathStorageCapability.getCapability(evt.getEntity()).ifPresent(deathStorage -> {
+      DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(deathStorage -> {
         if (deathStorage.getSettings().getMiscellaneousSettings().isRestrictRespawning()) {
           evt.setCanceled(true);
         }
@@ -57,11 +57,11 @@ public class MiscellaneousModule {
 
   @SubscribeEvent
   public static void playerRespawn(final PlayerRespawnEvent evt) {
-    Player player = evt.getEntity();
+    Player player = (Player) evt.getEntity();
 
     DeathStorageCapability.getCapability(player).ifPresent(
         deathStorage -> deathStorage.getSettings().getMiscellaneousSettings().getRespawnItems()
-            .forEach(item -> ItemHandlerHelper.giveItemToPlayer(evt.getEntity(), item.copy())));
+            .forEach(item -> ItemHandlerHelper.giveItemToPlayer(player, item.copy())));
 
     if (CorpseComplexConfig.respawnHealth > 0) {
       player.setHealth((float) CorpseComplexConfig.respawnHealth);

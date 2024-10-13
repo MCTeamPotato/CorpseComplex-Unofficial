@@ -102,7 +102,7 @@ public class MementoMoriModule {
 
   @SubscribeEvent
   public static void playerRespawn(final PlayerRespawnEvent evt) {
-    Player playerEntity = evt.getEntity();
+    Player playerEntity = (Player) evt.getEntity();
 
     if (!MementoMoriEffect.ATTRIBUTES.isEmpty() || CorpseComplexConfig.SERVER.noFood.get()
         || CorpseComplexConfig.SERVER.percentXp.get() != 0) {
@@ -119,8 +119,8 @@ public class MementoMoriModule {
 
   @SubscribeEvent
   public static void eatingFood(final PlayerInteractEvent.RightClickItem evt) {
-    DeathStorageCapability.getCapability(evt.getEntity()).ifPresent(deathStorage -> {
-      if (evt.getEntity().hasEffect(CorpseComplexRegistry.MEMENTO_MORI.get()) && deathStorage
+    DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(deathStorage -> {
+      if (((Player) evt.getEntity()).hasEffect(CorpseComplexRegistry.MEMENTO_MORI.get()) && deathStorage
           .getSettings().getMementoMoriSettings().isNoFood()
           && evt.getItemStack().getUseAnimation() == UseAnim.EAT) {
         evt.setCanceled(true);

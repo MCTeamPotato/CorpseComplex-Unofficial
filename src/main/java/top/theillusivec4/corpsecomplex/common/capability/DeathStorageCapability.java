@@ -47,7 +47,6 @@ public class DeathStorageCapability {
 
   // @CapabilityInject(IDeathStorage.class)
   public static final Capability<IDeathStorage> DEATH_STORAGE_CAP = CapabilityManager.get(new CapabilityToken<>(){});
-
   public static final ResourceLocation ID = new ResourceLocation(CorpseComplex.MODID, "death_storage");
 
   private static final String INVENTORIES = "Inventories";
@@ -57,7 +56,7 @@ public class DeathStorageCapability {
     return playerEntity.getCapability(DEATH_STORAGE_CAP);
   }
 
-  @AutoRegisterCapability
+  // @AutoRegisterCapability
   public interface IDeathStorage {
 
     Player getPlayer();
@@ -85,7 +84,7 @@ public class DeathStorageCapability {
     List<MobEffectInstance> getEffects();
   }
 
-  @AutoRegisterCapability
+  // @AutoRegisterCapability
   public static class DeathStorage implements IDeathStorage {
 
     private final Map<String, Tag> storage = new HashMap<>();

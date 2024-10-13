@@ -27,8 +27,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.corpsecomplex.common.config.CorpseComplexConfig;
@@ -110,7 +110,7 @@ public class InventoryHelper {
     if (!stack.isDamageableItem()) {
       return;
     }
-    LazyOptional<IEnergyStorage> energyStorage = stack.getCapability(ForgeCapabilities.ENERGY);
+    LazyOptional<IEnergyStorage> energyStorage = stack.getCapability(CapabilityEnergy.ENERGY);
 
     energyStorage.ifPresent(energy -> {
       int energyLoss = (int) Math.round(energy.getMaxEnergyStored() * durabilityLoss);

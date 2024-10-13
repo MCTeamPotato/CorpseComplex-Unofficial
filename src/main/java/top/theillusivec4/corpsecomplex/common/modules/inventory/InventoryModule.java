@@ -102,7 +102,7 @@ public class InventoryModule {
     if (evt.isWasDeath()) {
       Player original = evt.getOriginal();
       original.revive();
-      DeathStorageCapability.getCapability(evt.getEntity()).ifPresent(
+      DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(
           newStorage -> DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
               oldStorage -> STORAGE
                   .forEach(storage -> storage.retrieveInventory(newStorage, oldStorage))));

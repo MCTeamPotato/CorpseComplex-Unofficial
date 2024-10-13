@@ -141,6 +141,6 @@ public class DeathConditionManager {
   }
 
   public static EntityType<?> getEntityType(@Nullable String name) {
-    return name == null ? null : ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(name));
+    return name == null ? null : ForgeRegistries.ENTITIES.getValue(new ResourceLocation(name));
   }
 }
