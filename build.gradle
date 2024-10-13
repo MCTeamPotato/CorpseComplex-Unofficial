@@ -27,7 +27,7 @@ java {
 }
 
 minecraft {
-    mappings channel: "parchment", version: "2023.09.03-1.20.1"
+    mappings channel: "parchment", version: "2023.06.26-1.19.4"
 
     copyIdeResources = true
     runs {
@@ -110,11 +110,11 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.7.0+1.20.1")
-    compileOnly fg.deobf("curse.maven:cosmeticarmorreworked-237307:4600191")
-    compileOnly fg.deobf("curse.maven:tool-belt-260262:5393183")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.4-5.1.5.4")
+    compileOnly fg.deobf("curse.maven:cosmeticarmorreworked-237307:4439659")
+    compileOnly fg.deobf("curse.maven:tool-belt-260262:4441247")
 
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.7.0+1.20.1")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.4-5.1.5.4")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
@@ -129,7 +129,6 @@ tasks.named('processResources', ProcessResources).configure {
             loader_version_range: loader_version_range,
             mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
             mod_author: mod_author, mod_description: mod_description, mod_icon: mod_icon,
-            curios_version_range: curios_version_range,
     ]
 
     inputs.properties replaceProperties
