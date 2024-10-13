@@ -81,7 +81,7 @@ public class MiscellaneousModule {
       DeathStorageCapability.getCapability(playerEntity).ifPresent(
           deathStorage -> deathStorage.getSettings().getMiscellaneousSettings()
               .getMobSpawnsOnDeath()
-              .forEach(mob -> spawnMob(mob, BlockPos.containing(playerEntity.getPosition(1f)), world)));
+              .forEach(mob -> spawnMob(mob, new BlockPos(playerEntity.getPosition(1f)), world)));
     }
   }
 
@@ -106,7 +106,7 @@ public class MiscellaneousModule {
 
         if (entity instanceof Mob && world instanceof ServerLevel) {
           ((Mob) entity).finalizeSpawn((ServerLevel) world,
-              world.getCurrentDifficultyAt(BlockPos.containing(entity.getPosition(1))), MobSpawnType.TRIGGERED, null,
+              world.getCurrentDifficultyAt(new BlockPos(entity.getPosition(1))), MobSpawnType.TRIGGERED, null,
               null);
         }
         addEntity(entity, world);

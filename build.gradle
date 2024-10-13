@@ -27,7 +27,7 @@ java {
 }
 
 minecraft {
-    mappings channel: "parchment", version: "2023.06.26-1.19.4"
+    mappings channel: "parchment", version: "2022.11.27-1.19.2"
 
     copyIdeResources = true
     runs {
@@ -107,9 +107,9 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.4-5.1.5.4")
-    compileOnly fg.deobf("curse.maven:cosmeticarmorreworked-237307:4439659")
-    compileOnly fg.deobf("curse.maven:tool-belt-260262:4441247")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.6.3")
+    compileOnly fg.deobf("curse.maven:cosmeticarmorreworked-237307:4016732")
+    compileOnly fg.deobf("curse.maven:tool-belt-260262:4124032")
 
     // runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.4-5.1.5.4")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'

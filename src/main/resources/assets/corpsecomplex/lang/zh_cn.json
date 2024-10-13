@@ -1,5 +1,5 @@
 {
-  "creativetab.corpsecomplex.corpsecomplex": "Corpse Complex",
+  "itemGroup.corpsecomplex.corpsecomplex": "Corpse Complex",
   "effect.corpsecomplex.memento_mori": "死亡警告",
   "enchantment.corpsecomplex.soulbinding": "灵魂绑定",
   "enchantment.corpsecomplex.soulbinding.desc": "该附魔使物品免于死亡掉落",

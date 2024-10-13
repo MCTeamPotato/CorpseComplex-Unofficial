@@ -24,10 +24,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -56,10 +53,10 @@ public class DeathInfo {
 
   public DeathInfo(DamageSource source, Level world, @Nonnull List<String> gameStages) {
     this.damageType = source.getMsgId();
-    this.isFireDamage = source.is(DamageTypeTags.IS_FIRE);
-    this.isMagicDamage = source.is(DamageTypes.INDIRECT_MAGIC) || source.is(DamageTypes.MAGIC);
-    this.isExplosion = source.is(DamageTypeTags.IS_EXPLOSION);
-    this.isProjectile = source.is(DamageTypeTags.IS_PROJECTILE);
+    this.isFireDamage = source.isFire();
+    this.isMagicDamage = source.isMagic();
+    this.isExplosion = source.isExplosion();
+    this.isProjectile = source.isProjectile();
     this.immediateSource =
         source.getDirectEntity() != null ? source.getDirectEntity().getType() : null;
     this.trueSource = source.getEntity() != null ? source.getEntity().getType() : null;

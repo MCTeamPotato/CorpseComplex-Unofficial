@@ -1,5 +1,5 @@
 {
-  "creativetab.corpsecomplex.corpsecomplex": "Corpse Complex",
+  "itemGroup.corpsecomplex.corpsecomplex": "Corpse Complex",
   "effect.corpsecomplex.memento_mori": "Memento Mori",
   "enchantment.corpsecomplex.soulbinding": "Soulbinding",
   "enchantment.corpsecomplex.soulbinding.desc": "Saves the item from being dropped on death.",

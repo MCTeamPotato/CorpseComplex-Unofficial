@@ -19,12 +19,12 @@
 
 package top.theillusivec4.corpsecomplex;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -37,20 +37,16 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import top.theillusivec4.corpsecomplex.common.CommonEventHandler;
-import top.theillusivec4.corpsecomplex.common.capability.DeathStorageCapability;
 import top.theillusivec4.corpsecomplex.common.config.CorpseComplexConfig;
-import top.theillusivec4.corpsecomplex.common.modules.effects.EffectsModule;
-import top.theillusivec4.corpsecomplex.common.modules.experience.ExperienceModule;
-import top.theillusivec4.corpsecomplex.common.modules.hunger.HungerModule;
-import top.theillusivec4.corpsecomplex.common.modules.inventory.InventoryModule;
-import top.theillusivec4.corpsecomplex.common.modules.mementomori.MementoMoriModule;
-import top.theillusivec4.corpsecomplex.common.modules.miscellaneous.MiscellaneousModule;
 import top.theillusivec4.corpsecomplex.common.registry.CorpseComplexRegistry;
 import top.theillusivec4.corpsecomplex.common.util.integration.IntegrationManager;
 import top.theillusivec4.corpsecomplex.common.util.manager.DeathConditionManager;
 import top.theillusivec4.corpsecomplex.common.util.manager.DeathOverrideManager;
 import top.theillusivec4.corpsecomplex.common.util.manager.ItemOverrideManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
 @Mod(CorpseComplex.MODID)
 public class CorpseComplex {
@@ -69,6 +65,17 @@ public class CorpseComplex {
     CorpseComplexRegistry.register(eventBus);
   }
 
+  public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(MODID + "." + MODID) {
+    @Override
+    public ItemStack makeIcon() {
+      return new ItemStack(CorpseComplexRegistry.SCROLL.get());
+    }
+
+    @Override
+    public void fillItemList(NonNullList<ItemStack> pItems) {
+      pItems.add(new ItemStack(CorpseComplexRegistry.SCROLL.get()));
+    }
+  };
 
   private void setup(final FMLCommonSetupEvent evt) {
     IntegrationManager.init();
