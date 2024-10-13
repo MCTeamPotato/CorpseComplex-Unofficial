@@ -20,9 +20,15 @@
 package top.theillusivec4.corpsecomplex.common;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -52,8 +58,12 @@ public class CommonEventHandler {
     Player playerEntity = (Player) evt.getEntity();
     Level world = playerEntity.level;
 
-    if (!world.isClientSide()) {
-      DeathStorageCapability.getCapability(playerEntity).ifPresent(deathStorage -> {
+    if (!world.isClientSide() && evt.getEntity() instanceof ServerPlayer serverPlayer) {
+      BlockPos lastDeathLocation = serverPlayer.blockPosition();
+      List<Integer> list = List.of(lastDeathLocation.getX(), lastDeathLocation.getY(), lastDeathLocation.getZ());
+      serverPlayer.getPersistentData().putIntArray("lastDeathLocation", list);
+
+      DeathStorageCapability.getCapability(serverPlayer).ifPresent(deathStorage -> {
         deathStorage
             .setDeathDamageSource(new DeathInfo(evt.getSource(), world, new ArrayList<>()));
         deathStorage.buildSettings();
@@ -69,6 +79,10 @@ public class CommonEventHandler {
           deathStorage -> DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
               oldDeathStorage -> deathStorage
                   .setDeathDamageSource(oldDeathStorage.getDeathInfo())));
+      if (evt.getEntity() instanceof ServerPlayer serverPlayer){
+        int[] list = evt.getOriginal().getPersistentData().getIntArray("lastDeathLocation").clone();
+        serverPlayer.getPersistentData().putIntArray("lastDeathLocation", list);
+      }
     }
   }
 }

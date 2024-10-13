@@ -28,8 +28,10 @@ public class ScrollItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            Optional<GlobalPos> globalPos = player.getLastDeathLocation();
-            if (globalPos.isEmpty()) {
+            ServerPlayer serverPlayer = (ServerPlayer) player;
+            int[] list = serverPlayer.getPersistentData().getIntArray("lastDeathLocation").clone();
+
+            if (list.length == 0) {
                 player.sendMessage(new TranslatableComponent("message.corpsecomplex.death_loc_null"), player.getUUID());
                 return InteractionResultHolder.fail(itemstack);
             }
@@ -41,10 +43,9 @@ public class ScrollItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity entityLiving){
         if (!level.isClientSide && entityLiving instanceof ServerPlayer player){
-            Optional<GlobalPos> globalPos = player.getLastDeathLocation();
-            if (globalPos.isPresent()){
-                BlockPos blockPos = globalPos.get().pos();
-                player.teleportTo(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+            int[] list = player.getPersistentData().getIntArray("lastDeathLocation").clone();
+            if (list.length > 0){
+                player.teleportTo(list[0], list[1], list[2]);
                 player.getCooldowns().addCooldown(this, 20);
                 if (!player.isCreative()) itemStack.shrink(1);
             }

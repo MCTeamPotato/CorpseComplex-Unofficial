@@ -130,9 +130,9 @@ public class MementoMoriModule {
 
   @SubscribeEvent
   public static void eatingCake(final PlayerInteractEvent.RightClickBlock evt) {
-    DeathStorageCapability.getCapability(evt.getEntity()).ifPresent(deathStorage -> {
-      if (evt.getEntity().hasEffect(CorpseComplexRegistry.MEMENTO_MORI.get()) && deathStorage
-          .getSettings().getMementoMoriSettings().isNoFood() && evt.getLevel()
+    DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(deathStorage -> {
+      if (((Player) evt.getEntity()).hasEffect(CorpseComplexRegistry.MEMENTO_MORI.get()) && deathStorage
+          .getSettings().getMementoMoriSettings().isNoFood() && evt.getWorld()
           .getBlockState(evt.getPos()).getBlock() instanceof CakeBlock) {
         evt.setCanceled(true);
       }
@@ -141,7 +141,7 @@ public class MementoMoriModule {
 
   @SubscribeEvent
   public static void finishItemUse(LivingEntityUseItemEvent.Finish evt) {
-    LivingEntity entity = evt.getEntity();
+    LivingEntity entity = (LivingEntity) evt.getEntity();
 
     if (!entity.getCommandSenderWorld().isClientSide && entity instanceof Player) {
       DeathStorageCapability.getCapability((Player) entity).ifPresent(
@@ -156,8 +156,8 @@ public class MementoMoriModule {
 
   @SubscribeEvent
   public static void playerChangeXp(final PlayerXpEvent.XpChange evt) {
-    DeathStorageCapability.getCapability(evt.getEntity()).ifPresent(deathStorage -> {
-      Player playerEntity = evt.getEntity();
+    DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(deathStorage -> {
+      Player playerEntity = (Player) evt.getEntity();
       MobEffectInstance effectInstance = playerEntity
           .getEffect(CorpseComplexRegistry.MEMENTO_MORI.get());
 
