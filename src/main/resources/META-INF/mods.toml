@@ -24,9 +24,3 @@ ${mod_description}
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
-[[dependencies."${mod_id}"]]
-    modId="curios"
-    mandatory=false
-    versionRange="[1.19.4-5.1.5.4,)"
-    ordering="NONE"
-    side="BOTH"
