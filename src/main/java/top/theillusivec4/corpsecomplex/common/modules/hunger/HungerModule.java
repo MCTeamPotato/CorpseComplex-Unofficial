@@ -41,8 +41,8 @@ public class HungerModule {
   public static void playerRespawn(final PlayerEvent.Clone evt) {
 
     if (evt.isWasDeath()) {
-      DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(deathStorage -> {
-        FoodData stats = evt.getOriginal().getFoodData();
+      DeathStorageCapability.withOriginal(evt, deathStorage -> {
+        FoodData stats = evt.getEntity().getFoodData();
         FoodData oldStats = evt.getOriginal().getFoodData();
         HungerSetting setting = deathStorage.getSettings().getHungerSettings();
         int minFood = setting.getMinFood();

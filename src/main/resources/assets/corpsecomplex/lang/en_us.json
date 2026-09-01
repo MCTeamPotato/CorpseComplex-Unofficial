@@ -5,5 +5,6 @@
   "enchantment.corpsecomplex.soulbinding.desc": "Saves the item from being dropped on death.",
   "item.corpsecomplex.scroll": "Grave Scroll",
   "tooltip.corpsecomplex.scroll": "§7Return to death location",
-  "message.corpsecomplex.death_loc_null": "You do not have a death location to return to"
+  "message.corpsecomplex.death_loc_null": "You do not have a death location to return to",
+  "message.corpsecomplex.death_dimension_missing": "The dimension of your death location is unavailable"
 }

@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+[[mods]]
+modId="corpsecomplex_tests"
+version="1"
+displayName="Regression tests"

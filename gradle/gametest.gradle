@@ -1,0 +1,35 @@
+// Run with ./gradlew runGameTestServer. Test classes are excluded from release jars.
+sourceSets {
+    gameTest
+}
+
+configurations {
+    gameTestImplementation.extendsFrom implementation
+    gameTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
+dependencies {
+    gameTestImplementation sourceSets.main.output
+}
+
+legacyForge {
+    addModdingDependenciesTo sourceSets.gameTest
+    mods {
+        regressionTests {
+            sourceSet sourceSets.gameTest
+        }
+    }
+    runs {
+        configureEach {
+            loadedMods = [legacyForge.mods.getByName(mod_id)]
+        }
+        gameTestServer {
+            sourceSet = sourceSets.gameTest
+            loadedMods = [legacyForge.mods.getByName(mod_id), legacyForge.mods.regressionTests]
+            gameDirectory = project.file('build/gametest')
+            jvmArgument '-Xmx1G'
+            logLevel = org.slf4j.event.Level.INFO
+            systemProperty 'forge.disableVersionCheck', 'true'
+        }
+    }
+}

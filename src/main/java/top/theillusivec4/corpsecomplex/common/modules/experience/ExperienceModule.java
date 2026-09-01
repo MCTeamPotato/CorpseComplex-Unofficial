@@ -62,8 +62,8 @@ public class ExperienceModule {
   public static void playerRespawn(final PlayerEvent.Clone evt) {
 
     if (evt.isWasDeath()) {
-      Player playerEntity = evt.getOriginal();
-      DeathStorageCapability.getCapability(playerEntity).ifPresent(deathStorage -> {
+      Player playerEntity = evt.getEntity();
+      DeathStorageCapability.withOriginal(evt, deathStorage -> {
         Player original = evt.getOriginal();
         if (deathStorage.getSettings().getExperienceSettings().getLostXp() < 1) {
           playerEntity.experienceProgress = original.experienceProgress;

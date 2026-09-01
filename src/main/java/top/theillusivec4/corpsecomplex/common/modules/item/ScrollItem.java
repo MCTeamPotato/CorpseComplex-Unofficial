@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,8 +43,18 @@ public class ScrollItem extends Item {
         if (!level.isClientSide && entityLiving instanceof ServerPlayer player){
             Optional<GlobalPos> globalPos = player.getLastDeathLocation();
             if (globalPos.isPresent()){
-                BlockPos blockPos = globalPos.get().pos();
-                player.teleportTo(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                GlobalPos deathLocation = globalPos.get();
+                ServerLevel destination = player.server.getLevel(deathLocation.dimension());
+                if (destination == null) {
+                    player.sendSystemMessage(Component.translatable("message.corpsecomplex.death_dimension_missing"));
+                    return itemStack;
+                }
+                BlockPos blockPos = deathLocation.pos();
+                player.teleportTo(destination, blockPos.getX(), blockPos.getY(), blockPos.getZ(),
+                        player.getYRot(), player.getXRot());
+                if (player.serverLevel() != destination) {
+                    return itemStack;
+                }
                 player.getCooldowns().addCooldown(this, 20);
                 if (!player.isCreative()) itemStack.shrink(1);
             }
