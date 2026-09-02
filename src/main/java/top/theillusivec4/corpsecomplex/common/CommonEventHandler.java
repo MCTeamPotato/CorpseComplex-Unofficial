@@ -42,6 +42,9 @@ import top.theillusivec4.corpsecomplex.common.util.DeathInfo;
 
 @Mod.EventBusSubscriber(modid = CorpseComplex.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommonEventHandler {
+  public static final String LAST_DEATH_LOCATION = "lastDeathLocation";
+  public static final String LAST_DEATH_DIMENSION = "lastDeathDimension";
+
   @SubscribeEvent
   public static void attachCapability(final AttachCapabilitiesEvent<Entity> evt) {
     if (evt.getObject() instanceof Player) {
@@ -61,7 +64,9 @@ public class CommonEventHandler {
     if (!world.isClientSide() && evt.getEntity() instanceof ServerPlayer serverPlayer) {
       BlockPos lastDeathLocation = serverPlayer.blockPosition();
       List<Integer> list = List.of(lastDeathLocation.getX(), lastDeathLocation.getY(), lastDeathLocation.getZ());
-      serverPlayer.getPersistentData().putIntArray("lastDeathLocation", list);
+      serverPlayer.getPersistentData().putIntArray(LAST_DEATH_LOCATION, list);
+      serverPlayer.getPersistentData().putString(LAST_DEATH_DIMENSION,
+          serverPlayer.level.dimension().location().toString());
 
       DeathStorageCapability.getCapability(serverPlayer).ifPresent(deathStorage -> {
         deathStorage
@@ -75,13 +80,17 @@ public class CommonEventHandler {
   public static void playerClone(final PlayerEvent.Clone evt) {
 
     if (evt.isWasDeath()) {
-      DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
-          deathStorage -> DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
-              oldDeathStorage -> deathStorage
+      DeathStorageCapability.withOriginal(evt,
+          oldDeathStorage -> DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(
+              deathStorage -> deathStorage
                   .setDeathDamageSource(oldDeathStorage.getDeathInfo())));
       if (evt.getEntity() instanceof ServerPlayer serverPlayer){
-        int[] list = evt.getOriginal().getPersistentData().getIntArray("lastDeathLocation").clone();
-        serverPlayer.getPersistentData().putIntArray("lastDeathLocation", list);
+        int[] list = evt.getOriginal().getPersistentData().getIntArray(LAST_DEATH_LOCATION).clone();
+        serverPlayer.getPersistentData().putIntArray(LAST_DEATH_LOCATION, list);
+        String dimension = evt.getOriginal().getPersistentData().getString(LAST_DEATH_DIMENSION);
+        if (!dimension.isEmpty()) {
+          serverPlayer.getPersistentData().putString(LAST_DEATH_DIMENSION, dimension);
+        }
       }
     }
   }

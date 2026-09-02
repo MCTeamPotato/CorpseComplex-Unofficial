@@ -89,9 +89,9 @@ public class EffectsModule {
   public static void playerClone(final PlayerEvent.Clone evt) {
 
     if (evt.isWasDeath()) {
-      DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
-          deathStorage -> DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
-              oldDeathStorage -> oldDeathStorage.getEffects()
+      DeathStorageCapability.withOriginal(evt,
+          oldDeathStorage -> DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(
+              deathStorage -> oldDeathStorage.getEffects()
                   .forEach(deathStorage::addEffectInstance)));
     }
   }

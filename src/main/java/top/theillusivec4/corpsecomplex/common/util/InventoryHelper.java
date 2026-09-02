@@ -34,7 +34,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.corpsecomplex.common.config.CorpseComplexConfig;
 import top.theillusivec4.corpsecomplex.common.modules.inventory.InventorySetting;
 import top.theillusivec4.corpsecomplex.common.modules.inventory.InventorySetting.SectionSettings;
-import top.theillusivec4.corpsecomplex.common.modules.enchantment.SoulbindingEnchantment;
 import top.theillusivec4.corpsecomplex.common.util.Enums.DropMode;
 import top.theillusivec4.corpsecomplex.common.util.Enums.InventorySection;
 import top.theillusivec4.corpsecomplex.common.util.manager.ItemOverrideManager;
@@ -151,7 +150,8 @@ public class InventoryHelper {
     for (Map.Entry<Enchantment, Integer> enchantmentIntegerEntry : EnchantmentHelper
         .getEnchantments(stack).entrySet()) {
 
-      if (enchantmentIntegerEntry.getKey().isCompatibleWith(new SoulbindingEnchantment())) {
+      if (ForgeRegistries.ENCHANTMENTS.tags().getTag(SOULBOUND)
+          .contains(enchantmentIntegerEntry.getKey())) {
         level = enchantmentIntegerEntry.getValue();
         enchantment = enchantmentIntegerEntry.getKey();
         break;

@@ -21,7 +21,6 @@ package top.theillusivec4.corpsecomplex.common.modules.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
@@ -100,13 +99,10 @@ public class InventoryModule {
   public static void playerRespawn(final PlayerEvent.Clone evt) {
 
     if (evt.isWasDeath()) {
-      Player original = evt.getOriginal();
-      original.revive();
-      DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(
-          newStorage -> DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
-              oldStorage -> STORAGE
+      DeathStorageCapability.withOriginal(evt,
+          oldStorage -> DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(
+              newStorage -> STORAGE
                   .forEach(storage -> storage.retrieveInventory(newStorage, oldStorage))));
-      original.remove(Entity.RemovalReason.KILLED);
     }
   }
 }
