@@ -65,9 +65,9 @@ public class CommonEventHandler {
   public static void playerClone(final PlayerEvent.Clone evt) {
 
     if (evt.isWasDeath()) {
-      DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
-          deathStorage -> DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(
-              oldDeathStorage -> deathStorage
+      DeathStorageCapability.withOriginal(evt,
+          oldDeathStorage -> DeathStorageCapability.getCapability((Player) evt.getEntity()).ifPresent(
+              deathStorage -> deathStorage
                   .setDeathDamageSource(oldDeathStorage.getDeathInfo())));
     }
   }

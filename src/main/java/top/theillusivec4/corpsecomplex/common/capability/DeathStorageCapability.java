@@ -31,6 +31,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import top.theillusivec4.corpsecomplex.CorpseComplex;
 import top.theillusivec4.corpsecomplex.common.DeathSettings;
 import top.theillusivec4.corpsecomplex.common.util.DeathInfo;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class DeathStorageCapability {
 
@@ -55,6 +57,21 @@ public class DeathStorageCapability {
 
   public static LazyOptional<IDeathStorage> getCapability(final Player playerEntity) {
     return playerEntity.getCapability(DEATH_STORAGE_CAP);
+  }
+
+  public static void withOriginal(PlayerEvent.Clone event, Consumer<IDeathStorage> action) {
+    Player original = event.getOriginal();
+    boolean removed = original.isRemoved();
+    if (removed) {
+      original.reviveCaps();
+    }
+    try {
+      getCapability(original).ifPresent(action::accept);
+    } finally {
+      if (removed) {
+        original.invalidateCaps();
+      }
+    }
   }
 
   @AutoRegisterCapability

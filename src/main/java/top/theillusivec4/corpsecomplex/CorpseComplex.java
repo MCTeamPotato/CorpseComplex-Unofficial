@@ -82,15 +82,18 @@ public class CorpseComplex {
   }
 
   private void config(final ModConfigEvent evt) {
+    if (!(evt instanceof ModConfigEvent.Loading) && !(evt instanceof ModConfigEvent.Reloading)) {
+      return;
+    }
     ModConfig modConfig = evt.getConfig();
 
     if (modConfig.getModId().equals(MODID)) {
       ForgeConfigSpec spec = (ForgeConfigSpec) modConfig.getSpec();
 
       if (modConfig.getType() == Type.SERVER) {
-        CorpseComplexConfig.bakeConfigs();
-
-        if (spec == CorpseComplexConfig.OVERRIDES_SPEC) {
+        if (spec == CorpseComplexConfig.SERVER_SPEC) {
+          CorpseComplexConfig.bakeConfigs();
+        } else if (spec == CorpseComplexConfig.OVERRIDES_SPEC) {
           CorpseComplexConfig.transformOverrides(modConfig.getConfigData());
           DeathConditionManager.importConfig();
           DeathOverrideManager.importConfig();

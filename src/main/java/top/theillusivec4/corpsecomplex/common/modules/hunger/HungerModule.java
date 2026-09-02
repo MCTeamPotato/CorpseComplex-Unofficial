@@ -20,6 +20,7 @@
 package top.theillusivec4.corpsecomplex.common.modules.hunger;
 
 import net.minecraft.world.food.FoodData;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -41,8 +42,8 @@ public class HungerModule {
   public static void playerRespawn(final PlayerEvent.Clone evt) {
 
     if (evt.isWasDeath()) {
-      DeathStorageCapability.getCapability(evt.getOriginal()).ifPresent(deathStorage -> {
-        FoodData stats = evt.getOriginal().getFoodData();
+      DeathStorageCapability.withOriginal(evt, deathStorage -> {
+        FoodData stats = ((Player) evt.getEntity()).getFoodData();
         FoodData oldStats = evt.getOriginal().getFoodData();
         HungerSetting setting = deathStorage.getSettings().getHungerSettings();
         int minFood = setting.getMinFood();
